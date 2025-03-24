@@ -13,6 +13,7 @@ import {
   DiagnosticRequestItem,
   DiagnosticsRequestOptions,
   DoorRequestOptions,
+  TrunkRequestOptions,
   HttpClient,
   OAuthToken,
   OnStarConfig,
@@ -37,6 +38,8 @@ enum OnStarApiCommand {
   Start = "start",
   UnlockDoor = "unlockDoor",
   Location = "location",
+  LockTrunk = "lockTrunk",
+  UnlockTrunk = "unlockTrunk",
 }
 
 class RequestService {
@@ -131,6 +134,30 @@ class RequestService {
     return this.sendRequest(request);
   }
 
+  async lockTrunk(options: TrunkRequestOptions = {}): Promise<Result> {
+    const request = this.getCommandRequest(OnStarApiCommand.LockTrunk).setBody({
+      lockTrunkRequest: {
+        delay: 0,
+        ...options,
+      },
+    });
+
+    return this.sendRequest(request);
+  }
+
+  async unlockTrunk(options: DoorRequestOptions = {}): Promise<Result> {
+    const request = this.getCommandRequest(
+      OnStarApiCommand.UnlockTrunk,
+    ).setBody({
+      unlockTrunkRequest: {
+        delay: 0,
+        ...options,
+      },
+    });
+
+    return this.sendRequest(request);
+  }
+
   async alert(options: AlertRequestOptions = {}): Promise<Result> {
     const request = this.getCommandRequest(OnStarApiCommand.Alert).setBody({
       alertRequest: {
@@ -211,7 +238,7 @@ class RequestService {
     const request = new Request(
       `${this.getApiUrlForPath(
         "/account/vehicles",
-      )}?includeCommands=true&includeEntit%20lements=true&includeModules=true`,
+      )}?includeCommands=true&includeEntitlements=true&includeModules=true&includeSharedVehicles=true`,
     )
       .setUpgradeRequired(false)
       .setMethod(RequestMethod.Get);
@@ -242,7 +269,7 @@ class RequestService {
       Accept: "application/json",
       "Accept-Language": "en-US",
       "Content-Type": request.getContentType(),
-      Host: "api.gm.com",
+      Host: "na-mobile-api.gm.com",
       Connection: "keep-alive",
       "Accept-Encoding": "br, gzip, deflate",
       "User-Agent": onStarAppConfig.userAgent,

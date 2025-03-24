@@ -1,3 +1,10 @@
+# Archived
+
+**This plugin has been archived and is no longer maintained.**
+
+Check out [OnStarJS2](https://github.com/BigThunderSR/OnStarJS) for an actively maintained fork.
+
+
 # OnStarJS
 
 [![npm version](https://badge.fury.io/js/onstarjs.svg)](https://badge.fury.io/js/onstarjs)
@@ -138,6 +145,32 @@ For commands that return data like diagnostics or location, the data returned by
 </details>
 
 <details>
+<summary>Lock Trunk</summary>
+
+Locks the trunk but doesn't automatically close it.
+
+    onStar.lockTrunk([options]);
+
+| Option | Default | Valid Values          |
+| ------ | ------- | --------------------- |
+| delay  | 0       | Any integer (minutes) |
+
+</details>
+
+<details>
+<summary>Unlock Trunk</summary>
+
+Unlocks the trunk but doesn't automatically open it. All doors remain locked.
+
+    onStar.unlockTrunk([options]);
+
+| Option | Default | Valid Values          |
+| ------ | ------- | --------------------- |
+| delay  | 0       | Any integer (minutes) |
+
+</details>
+
+<details>
 <summary>Location</summary>
 
 Returns the location of the vehicle
@@ -193,7 +226,10 @@ Example Response
 
 # Development
 
-This project uses [pnpm](https://pnpm.io/) for package management.
+- Clone this repository
+- Install latest LTS version of [Node.js](https://nodejs.org/en/)
+- Enable [Corepack](https://github.com/nodejs/corepack) using `corepack enable`
+- Install dependencies using `pnpm install`
 
 ## Tests
 
